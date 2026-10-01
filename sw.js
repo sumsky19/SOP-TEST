@@ -1,17 +1,5 @@
-const CACHE = 'skshieldus-mock-v7-local-3';
-const CORE = ['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./skshieldus-logo.png'];
-self.addEventListener('install', event => {
-  self.skipWaiting();
-  event.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE).catch(()=>{})));
-});
-self.addEventListener('activate', event => {
-  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(()=>self.clients.claim()));
-});
-self.addEventListener('fetch', event => {
-  if (event.request.method !== 'GET') return;
-  event.respondWith(fetch(event.request).then(response => {
-    const copy=response.clone();
-    caches.open(CACHE).then(c=>c.put(event.request,copy)).catch(()=>{});
-    return response;
-  }).catch(()=>caches.match(event.request)));
-});
+const CACHE='skshieldus-sop-v1-prototype';
+const CORE=['./','./index.html','./data.js','./manifest.webmanifest','./icon-192.png','./icon-512.png','./skshieldus-logo.png'];
+self.addEventListener('install',event=>{self.skipWaiting();event.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE).catch(()=>{})))});
+self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
+self.addEventListener('fetch',event=>{if(event.request.method!=='GET')return;event.respondWith(fetch(event.request).then(r=>{const c=r.clone();caches.open(CACHE).then(x=>x.put(event.request,c)).catch(()=>{});return r}).catch(()=>caches.match(event.request)))});
