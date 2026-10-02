@@ -361,6 +361,7 @@ select,input,textarea{display:block;width:100%;min-width:0;max-width:100%;border
   $('viewBtn').onclick=()=>{refreshViewFilters();show('view')};
   $('manageBtn').onclick=()=>{renderManagement();show('manage')};$('backEval').onclick=()=>show('home');$('backView').onclick=()=>show('home');$('backManage').onclick=()=>show('home');
   month.onchange=renderQuestions;post.onchange=()=>{renderPostInfo();updateScore()};evaluator.oninput=updateScore;evalDate.oninput=updateScore;
+  finishBtn.onclick=finishEval;
   $('filterYear').onchange=renderView;$('filterMonth').onchange=renderView;$('filterDay').onchange=renderView;$('filterPost').onchange=renderView;
   $('selectAllVisible').onchange=()=>{const checked=$('selectAllVisible').checked;document.querySelectorAll('[data-record-check]').forEach(c=>c.checked=checked);updateExportDeleteButtons()};
   $('exportSelectedBtn').onclick=()=>{const ids=new Set(selectedIds()),recs=loadRecords().filter(r=>ids.has(r.id));exportXlsx(recs,'selected')};
